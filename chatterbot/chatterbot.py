@@ -87,6 +87,14 @@ class ChatBot(object):
         """
         Return the bot's response based on the input.
         """
+        response, confidence = self.get_response_with_confidence(input_text)
+
+        return response
+
+    def get_response_with_confidence(self, input_text):
+        """
+        Return the bot's response and confidence based on the input.
+        """
         input_statement = Statement(input_text)
 
         # Select a response to the input statement
@@ -108,7 +116,7 @@ class ChatBot(object):
         self.recent_statements.append(response)
 
         # Process the response output with the IO adapter
-        return self.io.process_response(response)
+        return self.io.process_response(response), confidence
 
     def train(self, conversation=None, *args, **kwargs):
         """
